@@ -169,22 +169,16 @@ def main():
 if __name__ == '__main__':
 
     #放到服务器上跑
-    schedtime = datetime.datetime(2018, 4, 6, 15, 22, 00)  # 要执行的时间
-    Frequency = datetime.timedelta(days = 1)  # 频率，也可以为负
-
     while (True):
-
         now = datetime.datetime.now()  # 返回值里面有微秒
-        print(now)
-        time.sleep(10)
+        time.sleep(1800)
         #一天运行一次
-        if now.date() == schedtime.date():
-            if (now.hour == schedtime.hour) and (now.minute == schedtime.minute):
-                schedtime = schedtime + Frequency
-                main()
-            else:
-                continue
+        if (now.hour == 23):
+            main()
+            print(str(now) + '到时间了！')
         else:
+            print(str(now) + '没到时间')
             continue
+
 
 

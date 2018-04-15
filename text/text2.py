@@ -1,55 +1,16 @@
 import requests
-import execjs
 import re
+import base64
+import datetime
 
-url = 'http://www.cnvd.org.cn/flaw/list.htm'
-
-r = requests
-content = r.get(url).text
-
-ss = '\d\d\d'
-sss = re.compile(ss)
-ap = sss.findall(content)
-print(ap)
-
-ss = '\d\d\d\d\d\d\d\d\d'
-sss = re.compile(ss)
-bp = sss.findall(content)
-print(bp)
-
-for i in range(0,5):
-    jsl = '__jsl_clearance=' + str(bp[0]) + '.' + str(ap[i]) + '|0|'
-
-    js ='''
-    function a(jsl) {
-        var cd, dc = jsl;
-        cd = Array( + [[( + !+[])] + [([ - ~ - ~~~ ! []] + ~~ {} >> -~ - ~~~ ! [])]]);
-        var chips = ['TAGGl', (!{} + [[], -~ {}][~~ ! []]).charAt( - ~ [( - ~ {} << -~ {})]), 'w7ZgszEX', [{} + [[], -~ {}][~~ ! []]][0].charAt(3 - ~~~ ! [] - ~~~ ! [] + 3), '%', [{} + [[], -~ {}][~~ ! []]][0].charAt(([ - ~ - ~~~ ! []] + ~~ {} >> -~ - ~~~ ! [])), 'B', ( + {} + [[], -~ {}][~~ ! []]).charAt(2), '86w', (2 + [] + [[]][( + [])]), 'D', ([][~~ {}] + [] + []).charAt(4), 'vHA', ( - ~ [] / ~~ ! [] + [[], -~ {}][~~ ! []]).charAt(6), '%3D'];
-        for (var i = 0; i < chips.length; i++) {
-            cd.reverse()[i] = chips[i]
-        };
-        cd = cd.join('');
-        dc += cd;
-        return dc;
-    };
-    '''
-
-    ctx = execjs.compile(js)
-    result = ctx.call('a',jsl)
-
-    headers = {
-    'Host': 'www.cnvd.org.cn',
-    'Connection': 'keep-alive',
-    'Pragma': 'no-cache',
-    'Cache-Control': 'no-cache',
-    'Upgrade-Insecure-Requests': '1',
-    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36',
-    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
-    'Referer': 'http://www.cnvd.org.cn/',
-    'Accept-Encoding': 'gzip, deflate',
-    'Accept-Language': 'zh-CN,zh;q=0.9',
-    'Cookie': '__jsluid=4649a1c0dcdac5d2e429a3c2b01386b5;' + result +';'
-    }
-    print(headers['Cookie'])
-    content = requests.session().get(url,headers=headers).text
-    print(content)
+a = 'd4e8e1f4a0f7e1f3a0e6e1f3f4a1a0d4e8e5a0e6ece1e7a0e9f3baa0c4c4c3d4c6fbb9b2b2e1e2b9b9b7b4e1b4b7e3e4b3b2b2e3e6b4b3e2b5b0b6b1b0e6e1e5e1b5fd'
+b = ''
+c = ''
+count = 0
+for i in a:
+    b = b + i
+    count = count +1
+    if count == 2:
+        count = 0
+        c = c + str(hex(b))
+print(c)
